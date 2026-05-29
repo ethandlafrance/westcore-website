@@ -67,12 +67,12 @@ export function Nav() {
           className="md:hidden inline-flex flex-col items-center justify-center w-10 h-10 cursor-pointer"
         >
           <span
-            className="block w-6 h-[2px] bg-white transition-all duration-200"
-            style={{ transform: open ? "translateY(4px) rotate(45deg)" : "translateY(-4px)" }}
+            className="block w-6 h-[2px] bg-white origin-center transition-transform duration-300 ease-out"
+            style={{ transform: open ? "translateY(1px) rotate(45deg)" : "translateY(-4px) rotate(0)" }}
           />
           <span
-            className="block w-6 h-[2px] bg-white transition-all duration-200"
-            style={{ transform: open ? "translateY(-1px) rotate(-45deg)" : "translateY(4px)" }}
+            className="block w-6 h-[2px] bg-white origin-center transition-transform duration-300 ease-out"
+            style={{ transform: open ? "translateY(-1px) rotate(-45deg)" : "translateY(4px) rotate(0)" }}
           />
         </button>
       </div>
