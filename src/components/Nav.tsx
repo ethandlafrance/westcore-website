@@ -41,8 +41,8 @@ export function Nav() {
           />
         </Link>
 
-        {/* Desktop nav — 768px and up */}
-        <nav className="hidden min-[480px]:flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-[12px] lg:text-[13px] font-semibold tracking-wide uppercase">
+        {/* Desktop nav (className uses raw CSS toggles, not Tailwind breakpoints) */}
+        <nav className="wc-desktop-nav flex-wrap items-center justify-end gap-x-5 gap-y-2 text-[12px] lg:text-[13px] font-semibold tracking-wide uppercase">
           {TEXT_LINKS.map((l) => (
             <Link key={l.href} href={l.href} className="relative nav-link">
               {l.label}
@@ -58,13 +58,13 @@ export function Nav() {
           </div>
         </nav>
 
-        {/* Mobile hamburger — below 768px */}
+        {/* Mobile hamburger */}
         <button
           type="button"
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="min-[480px]:hidden inline-flex flex-col items-center justify-center w-10 h-10 cursor-pointer"
+          className="wc-mobile-burger flex-col items-center justify-center w-10 h-10 cursor-pointer"
         >
           <span
             className="block w-6 h-[2px] bg-white origin-center transition-transform duration-300 ease-out"
@@ -79,7 +79,7 @@ export function Nav() {
 
       {/* Mobile drawer */}
       <div
-        className={`min-[480px]:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
+        className={`wc-mobile-drawer overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
           open ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
         }`}
         style={{
@@ -118,6 +118,18 @@ export function Nav() {
       </div>
 
       <style>{`
+        /* Default (mobile): show hamburger, hide desktop nav + drawer */
+        .wc-desktop-nav { display: none; }
+        .wc-mobile-burger { display: inline-flex; }
+        .wc-mobile-drawer { display: block; }
+
+        /* Anything wider than a phone (>= 360px) — show desktop nav, hide mobile */
+        @media (min-width: 360px) {
+          .wc-desktop-nav { display: flex; }
+          .wc-mobile-burger { display: none; }
+          .wc-mobile-drawer { display: none; }
+        }
+
         .nav-link {
           color: #FFFFFF;
           transition: color 180ms ease;
