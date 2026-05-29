@@ -43,14 +43,14 @@ export function FAQ() {
                 type="button"
                 onClick={() => setOpen(isOpen ? null : i)}
                 aria-expanded={isOpen}
-                className="w-full text-left py-6 group cursor-pointer"
+                className="w-full text-left py-3.5 md:py-4 group cursor-pointer"
               >
                 <div className="flex items-start justify-between gap-6">
-                  <span className="font-display text-xl md:text-2xl uppercase pr-4 group-hover:text-deep transition-colors">
+                  <span className="font-display text-lg md:text-xl uppercase pr-4 group-hover:text-deep transition-colors">
                     {f.q}
                   </span>
                   <span
-                    className="text-deep text-3xl leading-none shrink-0 transition-transform duration-300 ease-out"
+                    className="text-deep text-2xl leading-none shrink-0 transition-transform duration-300 ease-out"
                     style={{ transform: isOpen ? "rotate(45deg)" : "rotate(0)" }}
                   >
                     +
@@ -64,7 +64,7 @@ export function FAQ() {
                   }}
                 >
                   <div className="overflow-hidden">
-                    <p className="mt-3 text-lg text-muted-light max-w-3xl">{f.a}</p>
+                    <p className="mt-2 text-base md:text-lg text-muted-light max-w-3xl">{f.a}</p>
                   </div>
                 </div>
               </button>

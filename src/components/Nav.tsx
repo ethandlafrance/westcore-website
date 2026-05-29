@@ -1,3 +1,6 @@
+"use client";
+
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 
@@ -10,6 +13,13 @@ const TEXT_LINKS = [
 ];
 
 export function Nav() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
   return (
     <header
       className="sticky top-0 z-40 backdrop-blur-md"
@@ -18,7 +28,7 @@ export function Nav() {
         borderBottom: "1px solid rgba(0,180,255,0.18)",
       }}
     >
-      <div className="container-x flex items-center justify-between gap-6 py-4 md:py-5 flex-wrap">
+      <div className="container-x flex items-center justify-between gap-6 py-4 md:py-5">
         <Link href="/" className="flex items-center shrink-0" aria-label="Westcore Training Centre — Home">
           <Image
             src="/logo.avif"
@@ -31,18 +41,76 @@ export function Nav() {
           />
         </Link>
 
-        <nav className="flex flex-wrap items-center justify-end gap-x-6 gap-y-3 text-[13px] font-semibold tracking-wide uppercase">
+        {/* Desktop nav (md+) */}
+        <nav className="hidden md:flex flex-wrap items-center justify-end gap-x-6 gap-y-3 text-[13px] font-semibold tracking-wide uppercase">
           {TEXT_LINKS.map((l) => (
             <Link key={l.href} href={l.href} className="relative nav-link">
               {l.label}
             </Link>
           ))}
-
           <div className="flex items-center gap-2 ml-1">
             <Link href="/book-free-session" className="btn-neon !py-2 !px-4 !text-[11px]">
               Claim Free Session
             </Link>
             <Link href="/contact" className="btn-ghost-dark !py-2 !px-4 !text-[11px]">
+              Contact Us
+            </Link>
+          </div>
+        </nav>
+
+        {/* Mobile hamburger (< md) */}
+        <button
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className="md:hidden inline-flex flex-col items-center justify-center w-10 h-10 cursor-pointer"
+        >
+          <span
+            className="block w-6 h-[2px] bg-white transition-all duration-200"
+            style={{ transform: open ? "translateY(4px) rotate(45deg)" : "translateY(-4px)" }}
+          />
+          <span
+            className="block w-6 h-[2px] bg-white transition-all duration-200"
+            style={{ transform: open ? "translateY(-1px) rotate(-45deg)" : "translateY(4px)" }}
+          />
+        </button>
+      </div>
+
+      {/* Mobile drawer */}
+      <div
+        className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
+          open ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+        style={{
+          background: "var(--color-ink)",
+          borderTop: open ? "1px solid var(--color-line-dark)" : "none",
+        }}
+      >
+        <nav className="container-x py-5 flex flex-col">
+          {TEXT_LINKS.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              onClick={() => setOpen(false)}
+              className="py-3.5 border-b border-line-dark text-base font-semibold tracking-wide uppercase hover:text-neon"
+            >
+              {l.label}
+            </Link>
+          ))}
+          <div className="mt-5 grid gap-3">
+            <Link
+              href="/book-free-session"
+              onClick={() => setOpen(false)}
+              className="btn-neon w-full"
+            >
+              Claim Free Session
+            </Link>
+            <Link
+              href="/contact"
+              onClick={() => setOpen(false)}
+              className="btn-ghost-dark w-full"
+            >
               Contact Us
             </Link>
           </div>
