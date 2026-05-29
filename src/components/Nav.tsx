@@ -42,7 +42,7 @@ export function Nav() {
         </Link>
 
         {/* Desktop nav (md+) */}
-        <nav className="hidden md:flex flex-wrap items-center justify-end gap-x-6 gap-y-3 text-[13px] font-semibold tracking-wide uppercase">
+        <nav className="hidden sm:flex flex-wrap items-center justify-end gap-x-6 gap-y-3 text-[13px] font-semibold tracking-wide uppercase">
           {TEXT_LINKS.map((l) => (
             <Link key={l.href} href={l.href} className="relative nav-link">
               {l.label}
@@ -64,7 +64,7 @@ export function Nav() {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="md:hidden inline-flex flex-col items-center justify-center w-10 h-10 cursor-pointer"
+          className="sm:hidden inline-flex flex-col items-center justify-center w-10 h-10 cursor-pointer"
         >
           <span
             className="block w-6 h-[2px] bg-white origin-center transition-transform duration-300 ease-out"
@@ -79,7 +79,7 @@ export function Nav() {
 
       {/* Mobile drawer */}
       <div
-        className={`md:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
+        className={`sm:hidden overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
           open ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
         }`}
         style={{
