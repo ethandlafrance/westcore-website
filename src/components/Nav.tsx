@@ -12,13 +12,18 @@ const TEXT_LINKS = [
   { href: "/#faq", label: "FAQ" },
 ];
 
+const MOBILE_BREAKPOINT = 768;
+
 export function Nav() {
-  const [open, setOpen] = useState(false);
+  // Default false (= render desktop nav) for SSR. Update on mount to actual viewport.
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    document.body.style.overflow = open ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
-  }, [open]);
+    const check = () => setIsMobile(window.innerWidth < MOBILE_BREAKPOINT);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   return (
     <header
@@ -28,108 +33,9 @@ export function Nav() {
         borderBottom: "1px solid rgba(0,180,255,0.18)",
       }}
     >
-      <div className="container-x flex items-center justify-between gap-4 py-4 md:py-5">
-        <Link href="/" className="flex items-center shrink-0" aria-label="Westcore Training Centre — Home">
-          <Image
-            src="/logo.avif"
-            alt="Westcore Training Centre"
-            width={220}
-            height={60}
-            priority
-            className="block h-12 md:h-14 w-auto"
-            style={{ filter: "brightness(0) invert(1)" }}
-          />
-        </Link>
-
-        {/* Desktop nav (className uses raw CSS toggles, not Tailwind breakpoints) */}
-        <nav className="wc-desktop-nav flex-wrap items-center justify-end gap-x-5 gap-y-2 text-[12px] lg:text-[13px] font-semibold tracking-wide uppercase">
-          {TEXT_LINKS.map((l) => (
-            <Link key={l.href} href={l.href} className="relative nav-link">
-              {l.label}
-            </Link>
-          ))}
-          <div className="flex items-center gap-2 ml-1">
-            <Link href="/book-free-session" className="btn-neon !py-2 !px-3.5 !text-[11px]">
-              Claim Free Session
-            </Link>
-            <Link href="/contact" className="btn-ghost-dark !py-2 !px-3.5 !text-[11px]">
-              Contact Us
-            </Link>
-          </div>
-        </nav>
-
-        {/* Mobile hamburger */}
-        <button
-          type="button"
-          aria-label={open ? "Close menu" : "Open menu"}
-          aria-expanded={open}
-          onClick={() => setOpen((v) => !v)}
-          className="wc-mobile-burger flex-col items-center justify-center w-10 h-10 cursor-pointer"
-        >
-          <span
-            className="block w-6 h-[2px] bg-white origin-center transition-transform duration-300 ease-out"
-            style={{ transform: open ? "translateY(1px) rotate(45deg)" : "translateY(-4px) rotate(0)" }}
-          />
-          <span
-            className="block w-6 h-[2px] bg-white origin-center transition-transform duration-300 ease-out"
-            style={{ transform: open ? "translateY(-1px) rotate(-45deg)" : "translateY(4px) rotate(0)" }}
-          />
-        </button>
-      </div>
-
-      {/* Mobile drawer */}
-      <div
-        className={`wc-mobile-drawer overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
-          open ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
-        }`}
-        style={{
-          background: "var(--color-ink)",
-          borderTop: open ? "1px solid var(--color-line-dark)" : "none",
-        }}
-      >
-        <nav className="container-x py-5 flex flex-col">
-          {TEXT_LINKS.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              onClick={() => setOpen(false)}
-              className="py-3.5 border-b border-line-dark text-base font-semibold tracking-wide uppercase hover:text-neon"
-            >
-              {l.label}
-            </Link>
-          ))}
-          <div className="mt-5 grid gap-3">
-            <Link
-              href="/book-free-session"
-              onClick={() => setOpen(false)}
-              className="btn-neon w-full"
-            >
-              Claim Free Session
-            </Link>
-            <Link
-              href="/contact"
-              onClick={() => setOpen(false)}
-              className="btn-ghost-dark w-full"
-            >
-              Contact Us
-            </Link>
-          </div>
-        </nav>
-      </div>
+      {isMobile ? <MobileNav /> : <DesktopNav />}
 
       <style>{`
-        /* Default (mobile): show hamburger, hide desktop nav + drawer */
-        .wc-desktop-nav { display: none; }
-        .wc-mobile-burger { display: inline-flex; }
-        .wc-mobile-drawer { display: block; }
-
-        /* Anything wider than a phone (>= 360px) — show desktop nav, hide mobile */
-        @media (min-width: 360px) {
-          .wc-desktop-nav { display: flex; }
-          .wc-mobile-burger { display: none; }
-          .wc-mobile-drawer { display: none; }
-        }
-
         .nav-link {
           color: #FFFFFF;
           transition: color 180ms ease;
@@ -149,5 +55,108 @@ export function Nav() {
         .nav-link:hover::after { transform: scaleX(1); }
       `}</style>
     </header>
+  );
+}
+
+function LogoLink({ heightClass }: { heightClass: string }) {
+  return (
+    <Link href="/" className="flex items-center shrink-0" aria-label="Westcore Training Centre — Home">
+      <Image
+        src="/logo.avif"
+        alt="Westcore Training Centre"
+        width={220}
+        height={60}
+        priority
+        className={`block ${heightClass} w-auto`}
+        style={{ filter: "brightness(0) invert(1)" }}
+      />
+    </Link>
+  );
+}
+
+function DesktopNav() {
+  return (
+    <div className="container-x flex items-center justify-between gap-4 py-5">
+      <LogoLink heightClass="h-14" />
+      <nav className="flex flex-wrap items-center justify-end gap-x-5 gap-y-2 text-[13px] font-semibold tracking-wide uppercase">
+        {TEXT_LINKS.map((l) => (
+          <Link key={l.href} href={l.href} className="relative nav-link">
+            {l.label}
+          </Link>
+        ))}
+        <div className="flex items-center gap-2 ml-1">
+          <Link href="/book-free-session" className="btn-neon !py-2 !px-3.5 !text-[11px]">
+            Claim Free Session
+          </Link>
+          <Link href="/contact" className="btn-ghost-dark !py-2 !px-3.5 !text-[11px]">
+            Contact Us
+          </Link>
+        </div>
+      </nav>
+    </div>
+  );
+}
+
+function MobileNav() {
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = open ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [open]);
+
+  return (
+    <>
+      <div className="container-x flex items-center justify-between gap-4 py-4">
+        <LogoLink heightClass="h-12" />
+        <button
+          type="button"
+          aria-label={open ? "Close menu" : "Open menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className="inline-flex flex-col items-center justify-center w-10 h-10 cursor-pointer"
+        >
+          <span
+            className="block w-6 h-[2px] bg-white origin-center transition-transform duration-300 ease-out"
+            style={{ transform: open ? "translateY(1px) rotate(45deg)" : "translateY(-4px) rotate(0)" }}
+          />
+          <span
+            className="block w-6 h-[2px] bg-white origin-center transition-transform duration-300 ease-out"
+            style={{ transform: open ? "translateY(-1px) rotate(-45deg)" : "translateY(4px) rotate(0)" }}
+          />
+        </button>
+      </div>
+
+      <div
+        className={`overflow-hidden transition-[max-height,opacity] duration-300 ease-out ${
+          open ? "max-h-[520px] opacity-100" : "max-h-0 opacity-0"
+        }`}
+        style={{
+          background: "var(--color-ink)",
+          borderTop: open ? "1px solid var(--color-line-dark)" : "none",
+        }}
+      >
+        <nav className="container-x py-5 flex flex-col">
+          {TEXT_LINKS.map((l) => (
+            <Link
+              key={l.href}
+              href={l.href}
+              onClick={() => setOpen(false)}
+              className="py-3.5 border-b border-line-dark text-base font-semibold tracking-wide uppercase hover:text-neon"
+            >
+              {l.label}
+            </Link>
+          ))}
+          <div className="mt-5 grid gap-3">
+            <Link href="/book-free-session" onClick={() => setOpen(false)} className="btn-neon w-full">
+              Claim Free Session
+            </Link>
+            <Link href="/contact" onClick={() => setOpen(false)} className="btn-ghost-dark w-full">
+              Contact Us
+            </Link>
+          </div>
+        </nav>
+      </div>
+    </>
   );
 }
