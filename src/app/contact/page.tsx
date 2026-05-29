@@ -9,7 +9,7 @@ import { ContactForm } from "@/components/ContactForm";
 export const metadata: Metadata = {
   title: "Contact Us",
   description:
-    "Reach Westcore Training Centre. Six BC locations, click-to-call, or send us a message. We respond within minutes.",
+    "Reach Westcore Training Centre. Five BC locations, click-to-call, or send us a message. We respond within minutes.",
   alternates: { canonical: "/contact" },
 };
 
@@ -34,7 +34,7 @@ export default function ContactPage() {
               <span className="neon-glow text-neon">TOUCH.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-muted-dark">
-              Six locations across BC. Pick the one closest to you and we&apos;ll get back
+              Five locations across BC. Pick the one closest to you and we&apos;ll get back
               to you within minutes.
             </p>
 
@@ -53,7 +53,7 @@ export default function ContactPage() {
               />
               <QuickAction
                 title="Find A Location"
-                sub="Six across BC"
+                sub="Five across BC"
                 href="#locations"
               />
             </div>
@@ -66,7 +66,7 @@ export default function ContactPage() {
           <div className="container-x">
             <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
               <div>
-                <div className="eyebrow text-deep mb-5">Six BC Locations</div>
+                <div className="eyebrow text-deep mb-5">Five BC Locations</div>
                 <h2 className="h-display text-4xl md:text-6xl">
                   PICK YOUR<br />NEAREST POD.
                 </h2>

@@ -16,7 +16,7 @@ export function Footer() {
             style={{ filter: "brightness(0) invert(1)" }}
           />
           <p className="mt-4 text-muted-dark max-w-md">
-            Semi-private personal training in private workout pods. Six BC locations.
+            Semi-private personal training in private workout pods. Five BC locations.
             One simple promise: real coaching, real results.
           </p>
           <Link href="/book-free-session" className="btn-neon mt-7">

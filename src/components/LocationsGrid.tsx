@@ -7,7 +7,7 @@ export function LocationsGrid() {
       <div className="container-x">
         <div className="flex items-end justify-between flex-wrap gap-6 mb-12">
           <div>
-            <div className="eyebrow text-deep mb-5">Six Locations Across BC</div>
+            <div className="eyebrow text-deep mb-5">Five Locations Across BC</div>
             <h2 className="h-display text-5xl md:text-7xl">
               TRAIN CLOSE<br />TO HOME.
             </h2>

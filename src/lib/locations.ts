@@ -61,16 +61,6 @@ export const LOCATIONS: Location[] = [
     status: "open",
     geo: { lat: 49.1882, lng: -122.8049 },
   },
-  {
-    slug: "kelowna",
-    city: "Kelowna",
-    address: "Coming soon",
-    postal: "",
-    phone: "",
-    phoneHref: "",
-    status: "comingSoon",
-    geo: { lat: 49.8880, lng: -119.4960 },
-  },
 ];
 
 export const getLocation = (slug: string) =>

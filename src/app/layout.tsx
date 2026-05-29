@@ -9,11 +9,11 @@ export const metadata: Metadata = {
     template: "%s | Westcore Training Centre",
   },
   description:
-    "Personal training in private workout pods. 6 locations across BC: Victoria, Saanich, Sidney, Surrey, Courtenay, Kelowna. Claim your free intro session today.",
+    "Personal training in private workout pods. 5 locations across BC: Victoria, Saanich, Sidney, Surrey, Courtenay. Claim your free intro session today.",
   openGraph: {
     title: "Westcore Training Centre | Personal Training Without the Crowd",
     description:
-      "Semi-private personal training in private pods. 6 BC locations. Claim a free intro session.",
+      "Semi-private personal training in private pods. 5 BC locations. Claim a free intro session.",
     type: "website",
     siteName: "Westcore Training Centre",
   },

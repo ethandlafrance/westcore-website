@@ -37,7 +37,7 @@ export function Hero() {
       />
 
       <div className="container-x relative pt-20 pb-24 md:pt-28 md:pb-36 reveal" style={{ zIndex: 1 }}>
-        <div className="eyebrow eyebrow-neon mb-6">★ 4.7 across BC · 6 locations</div>
+        <div className="eyebrow eyebrow-neon mb-6">★ 4.7 across BC · 5 locations</div>
         <h1 className="h-display text-5xl sm:text-6xl md:text-7xl lg:text-8xl">
           <span className="block whitespace-nowrap">NOT A GYM.</span>
           <span className="block whitespace-nowrap text-neon neon-glow">A POD.</span>
